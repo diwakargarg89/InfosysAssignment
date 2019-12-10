@@ -5,10 +5,13 @@ target 'InfosysAssignment' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 	pod 'SDWebImage'
+  pod 'SwiftLint'
+  pod 'MBProgressHUD'
   # Pods for InfosysAssignment
 
   target 'InfosysAssignmentTests' do
     inherit! :search_paths
+      pod 'SwiftLint'
     # Pods for testing
   end
 
