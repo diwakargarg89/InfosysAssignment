@@ -81,7 +81,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     //Call the Api and Load the Data to the Ui
     func apiCallingUsingNativeMethods() {
         
-        addHUD(onViewController: self)
+//        addHUD(onViewController: self)
         
         let session = URLSession.shared
         let url = URL(string: urlString)!
@@ -107,14 +107,14 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
                 DispatchQueue.main.async {
                     self.navigationItem.title = responseModel.titleKey
                     //Code to refresh table view
-                    self.removeHUD(onViewController: self)
+//                    self.removeHUD(onViewController: self)
                     self.refreshControlView.endRefreshing()
                     self.customTableView.reloadData()
                 }
             } catch {
                 DispatchQueue.main.async {
                     self.refreshControlView.endRefreshing()
-                    self.removeHUD(onViewController: self)
+//                    self.removeHUD(onViewController: self)
                     self.customTableView.reloadData()
                 }
                 
