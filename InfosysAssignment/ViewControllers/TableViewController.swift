@@ -10,7 +10,6 @@ import UIKit
 
 class TableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
-
     var refreshControlView = UIRefreshControl()
     let customTableView = UITableView() // view
     var apiData = [Rows]()
@@ -26,18 +25,15 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
-        if (Reachability.isInternetAvailable())
-               {
+        if Reachability.isInternetAvailable() {
                    apiCallingUsingNativeMethods()
-               }
-               else
-               {
-                    self.alert(title: internetConnectionErrorTitle , message: internetConnectionErrorMessage)
+               } else {
+                    self.alert(title: internetConnectionErrorTitle, message: internetConnectionErrorMessage)
                }
     }
     
 //Custom Design of the View Progrmatically.
-    func setupTableView(){
+    func setupTableView() {
         // Do any additional setup after loading the view.
         view.backgroundColor = .white
         view.addSubview(customTableView)
@@ -47,14 +43,13 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     customTableView.tableFooterView = UIView()
         customTableView.estimatedRowHeight = 100
         customTableView.rowHeight = UITableView.automaticDimension
-       
         
         //set the AutoLayout
         customTableView.translatesAutoresizingMaskIntoConstraints = false
-        customTableView.topAnchor.constraint(equalTo:view.safeAreaLayoutGuide.topAnchor).isActive = true
-        customTableView.leftAnchor.constraint(equalTo:view.safeAreaLayoutGuide.leftAnchor).isActive = true
-        customTableView.rightAnchor.constraint(equalTo:view.safeAreaLayoutGuide.rightAnchor).isActive = true
-        customTableView.bottomAnchor.constraint(equalTo:view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        customTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        customTableView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
+        customTableView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
+        customTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
  
         //Set the datasource and delegate to custom table view.
         customTableView.dataSource = self
@@ -68,25 +63,21 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         customTableView.addSubview(refreshControlView)
     }
     //Rerequest the Api
-    @objc func pullToRefresh(sender:AnyObject) {
+    @objc func pullToRefresh(sender: AnyObject) {
         //Call the api To reload the data
-        if (Reachability.isInternetAvailable())
-        {
+        if Reachability.isInternetAvailable() {
             apiCallingUsingNativeMethods()
-        }
-        else
-        {
+        } else {
              self.refreshControlView.endRefreshing()
           DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-             self.alert(title: internetConnectionErrorTitle , message: internetConnectionErrorMessage)
+             self.alert(title: internetConnectionErrorTitle, message: internetConnectionErrorMessage)
             }
         }
     }
- // MARK: -Network releated function
+ // MARK: - Network releated function
     
      //Call the Api and Load the Data to the Ui
-        func apiCallingUsingNativeMethods()
-        {
+        func apiCallingUsingNativeMethods() {
           let session = URLSession.shared
            let url = URL(string: urlString)!
 
@@ -122,11 +113,10 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
            task.resume()
         }
     
-    func updateUserInterface()
-      {
+    func updateUserInterface() {
           switch Network.reachability.status {
           case .unreachable:
-             self.alert(title: internetConnectionErrorTitle , message: internetConnectionErrorMessage)
+             self.alert(title: internetConnectionErrorTitle, message: internetConnectionErrorMessage)
           case .wwan:
                print("WWAN connection")
           case .wifi:
@@ -156,44 +146,40 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
 
  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
  
-    let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! CustomTableViewCell
+    let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as? CustomTableViewCell
     
     //remove the cell selection
-    cell.selectionStyle = UITableViewCell.SelectionStyle.none
+    cell?.selectionStyle = UITableViewCell.SelectionStyle.none
     //Set the data in to the UI
     
     if let constantTitle = apiData[indexPath.row].title {
-        cell.titleLabel.text = constantTitle
-    }else {
-          cell.titleLabel.text = nilTextAssign
+        cell?.titleLabel.text = constantTitle
+    } else {
+        cell?.titleLabel.text = nilTextAssign
     }
     
     if let description = apiData[indexPath.row].description {
-        cell.descriptionTitleLabel.text = description
-    }else {
-          cell.descriptionTitleLabel.text = nilTextAssign
+        cell?.descriptionTitleLabel.text = description
+    } else {
+        cell?.descriptionTitleLabel.text = nilTextAssign
     }
    
-    if let imageHref = apiData[indexPath.row].imageHref
-    {
-    cell.profileImageView.sd_setImage(with: URL(string:imageHref), placeholderImage: UIImage(named: "Placeholder"))
-    }else {
-        cell.profileImageView.image = UIImage(named: "Placeholder")
+    if let imageHref = apiData[indexPath.row].imageHref {
+        cell?.profileImageView.sd_setImage(with: URL(string: imageHref), placeholderImage: UIImage(named: "Placeholder"))
+    } else {
+        cell?.profileImageView.image = UIImage(named: "Placeholder")
     }
-    return cell
+    return cell!
 }
 }
 
-extension UIViewController
-{
+extension UIViewController {
     //Alert Show Details
-    func alert(title: String, message: String)
-    {
+    func alert(title: String, message: String) {
         
-        let alertController = UIAlertController(title: title, message: message, preferredStyle:UIAlertController.Style.alert)
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         
-        alertController.addAction(UIAlertAction(title: okTitle, style: UIAlertAction.Style.default,handler:nil))
-        
+        alertController.addAction(UIAlertAction(title: okTitle, style: UIAlertAction.Style.default, handler: nil))
         
         if var topController = UIApplication.shared.keyWindow?.rootViewController {
             while let presentedViewController = topController.presentedViewController {

@@ -8,9 +8,9 @@
 
 import Foundation
 
-struct JsonParsingModel : Codable {
-    let title : String?
-    let rows : [Rows]?
+struct JsonParsingModel: Codable {
+    let title: String?
+    let rows: [Rows]?
 
     enum CodingKeys: String, CodingKey {
 
@@ -26,10 +26,10 @@ struct JsonParsingModel : Codable {
 
 }
 
-struct Rows : Codable {
-    let title : String?
-    let description : String?
-    let imageHref : String?
+struct Rows: Codable {
+    let title: String?
+    let description: String?
+    let imageHref: String?
 
     enum CodingKeys: String, CodingKey {
 
