@@ -30,6 +30,9 @@ class InfosysAssignmentTests: XCTestCase {
     func testViewDidLoad() {
         //test view did load
         XCTAssertNotNil(tableViewController.viewDidLoad())
+        XCTAssertNotNil(tableViewController.setupTableView())
+        XCTAssertNotNil(tableViewController.pullToRefresh(sender: self))
+        XCTAssertNotNil(tableViewController.apiCallingUsingNativeMethods())
         XCTAssertNotNil(tableViewController.numberOfSections(in: tableViewController.customTableView))
     }
     func testViewWillAppear() {
