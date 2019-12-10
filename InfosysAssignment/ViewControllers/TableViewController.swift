@@ -17,7 +17,8 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
  // MARK: - Lifecycle Of Viewcontroller
     override func viewDidLoad() {
         super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(statusManager), name: .flagsChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(statusManager),
+                                               name: .flagsChanged, object: nil)
         //Custom Method for the TableView
         setupTableView()
     }
@@ -98,9 +99,9 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
                 //Json response parsing using decode
                 let responseModel: JsonParsingModel = try jsonDecoder.decode(JsonParsingModel.self, from: utf8Data!)
                 print(responseModel)
-                self.apiData = responseModel.rows!
+                self.apiData = responseModel.rowsKey!
                DispatchQueue.main.async {
-                self.navigationItem.title = responseModel.title
+                self.navigationItem.title = responseModel.titleKey
                 //Code to refresh table view
                 self.refreshControlView.endRefreshing()
                 self.customTableView.reloadData()
@@ -152,7 +153,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     cell?.selectionStyle = UITableViewCell.SelectionStyle.none
     //Set the data in to the UI
     
-    if let constantTitle = apiData[indexPath.row].title {
+    if let constantTitle = apiData[indexPath.row].rowTitle {
         cell?.titleLabel.text = constantTitle
     } else {
         cell?.titleLabel.text = nilTextAssign
@@ -165,7 +166,8 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
    
     if let imageHref = apiData[indexPath.row].imageHref {
-        cell?.profileImageView.sd_setImage(with: URL(string: imageHref), placeholderImage: UIImage(named: "Placeholder"))
+        cell?.profileImageView.sd_setImage(with: URL(string: imageHref),
+                                           placeholderImage: UIImage(named: "Placeholder"))
     } else {
         cell?.profileImageView.image = UIImage(named: "Placeholder")
     }
@@ -177,7 +179,8 @@ extension UIViewController {
     //Alert Show Details
     func alert(title: String, message: String) {
         
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        let alertController = UIAlertController(title: title, message: message,
+                                                preferredStyle: UIAlertController.Style.alert)
         
         alertController.addAction(UIAlertAction(title: okTitle, style: UIAlertAction.Style.default, handler: nil))
         

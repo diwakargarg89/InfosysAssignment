@@ -154,7 +154,8 @@ var context = SCNetworkReachabilityContext(version: 0, info: nil, retain: nil, r
     var isWWAN: Bool { return flags?.contains(.isWWAN) == true }
 
     var isRequiredAndTransientConnection: Bool {
-        return (flags?.intersection([.connectionRequired, .transientConnection]) == [.connectionRequired, .transientConnection]) == true
+        return (flags?.intersection([.connectionRequired, .transientConnection]) ==
+            [.connectionRequired, .transientConnection]) == true
     }
 }
 

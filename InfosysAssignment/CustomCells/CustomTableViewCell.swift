@@ -61,7 +61,8 @@ class CustomTableViewCell: UITableViewCell {
        
         // configure ContainerView
         containerView.centerYAnchor.constraint(equalTo: marginGuide.centerYAnchor).isActive = true
-        containerView.leadingAnchor.constraint(equalTo: self.profileImageView.trailingAnchor, constant: 10).isActive = true
+        containerView.leadingAnchor.constraint(equalTo: self.profileImageView.trailingAnchor,
+                                               constant: 10).isActive = true
         containerView.trailingAnchor.constraint(equalTo: marginGuide.trailingAnchor, constant: -10).isActive = true
         containerView.heightAnchor.constraint(equalTo: marginGuide.heightAnchor, constant: -10).isActive = true
           
